@@ -1,6 +1,6 @@
 package ma.inpt.esj.entities;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Entity
+@Embeddable
 public class Experience {
     private String annee;
 

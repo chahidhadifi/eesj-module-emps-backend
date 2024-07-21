@@ -40,5 +40,4 @@ public interface JeuneRepository extends JpaRepository<Jeune, Long> {
     @Query(value = "select j.* from jeune j, dossier_medical d where d.jeune_id = j.id and d.maladies_diagnostiquees = :maladie", nativeQuery = true)
     List<Jeune> getAllJeunesByMaladie(@Param("maladie") String maladie);
     */
-    List<Jeune> findByMedecinId(Long medecinId);
 }
