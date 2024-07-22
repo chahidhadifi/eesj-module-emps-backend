@@ -43,25 +43,36 @@ public class Jeune {
 
     private boolean favorite;
 
+    private String adresse;
+
     @ElementCollection
-    @CollectionTable(name = "antecedent_personnel_medicaux", joinColumns = @JoinColumn(name = "jeune_id"))
+    @CollectionTable(name = "ap_medicaux", joinColumns = @JoinColumn(name = "jeune_id"))
     @Column(name = "medicaux")
     private List<String> medicaux;
 
     @ElementCollection
-    @CollectionTable(name = "antecedent_personnel_chirurgicaux", joinColumns = @JoinColumn(name = "jeune_id"))
+    @CollectionTable(name = "ap_chirurgicaux", joinColumns = @JoinColumn(name = "jeune_id"))
     @Column(name = "chirurgicaux")
     private List<String> chirurgicaux;
 
     @ElementCollection
-    @CollectionTable(name = "antecedent_personnel_habitues", joinColumns = @JoinColumn(name = "jeune_id"))
+    @CollectionTable(name = "ap_habitues", joinColumns = @JoinColumn(name = "jeune_id"))
     @Column(name = "habitues")
     private List<String> habitues;
 
     @ElementCollection
-    @CollectionTable(name = "antecedent_familial_maladies", joinColumns = @JoinColumn(name = "jeune_id"))
+    @CollectionTable(name = "af_maladies", joinColumns = @JoinColumn(name = "jeune_id"))
     @Column(name = "maladies_familiales")
     private List<String> maladiesFamiliales;
+
+    @ElementCollection
+    @CollectionTable(name = "observation", joinColumns = @JoinColumn(name = "jeune_id"))
+    @Column(name = "observation")
+    private List<String> observation;
+
+    @ElementCollection
+    @CollectionTable(name = "consultation", joinColumns = @JoinColumn(name = "jeune_id"))
+    private List<Consultation> consultation;
 
     private Long infoUserId;
 }

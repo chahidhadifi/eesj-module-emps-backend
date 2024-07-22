@@ -31,5 +31,7 @@ public class InfoUser {
 
     private String cin;
 
+    private String image_url;
+
     private String motDePasse;
 }

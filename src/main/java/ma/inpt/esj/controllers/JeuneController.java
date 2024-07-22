@@ -27,6 +27,16 @@ public class JeuneController {
         return jeuneService.getAllJeunes();
     }
 
+    @GetMapping("/with-user-info")
+    public List<Object[]> getAllJeuneWithInfoUser() {
+        return jeuneService.getAllJeuneWithInfoUser();
+    }
+
+    @GetMapping("/dossier-medical/{id}")
+    public Object getJeuneDossierMedical(@PathVariable Long id) {
+        return jeuneService.getJeuneDossierMedical(id);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Jeune> getJeuneById(@PathVariable Long id) {
         return jeuneService.getJeuneById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
@@ -46,35 +56,5 @@ public class JeuneController {
     public ResponseEntity<Void> deleteJeune(@PathVariable Long id) {
         jeuneService.deleteJeune(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/order-by-age-asc")
-    public List<Jeune> getAllJeunesOrderByAgeAsc() {
-        return jeuneService.getAllJeunesOrderByAgeAsc();
-    }
-
-    @GetMapping("/order-by-age-desc")
-    public List<Jeune> getAllJeunesOrderByAgeDesc() {
-        return jeuneService.getAllJeunesOrderByAgeDesc();
-    }
-
-    @GetMapping("/order-by-nom")
-    public List<Jeune> getAllJeunesOrderByNom() {
-        return jeuneService.getAllJeunesOrderByNom();
-    }
-
-    @GetMapping("/order-by-prenom")
-    public List<Jeune> getAllJeunesOrderByPrenom() {
-        return jeuneService.getAllJeunesOrderByPrenom();
-    }
-
-    @GetMapping("/get-by-sexe/{sexe}")
-    public List<Jeune> getAllJeunesBySexe(@PathVariable String sexe) {
-        return jeuneService.getAllJeunesBySexe(sexe);
-    }
-
-    @GetMapping("/get-by-nom/{nom}")
-    public List<Jeune> getAllJeunesByNom(@PathVariable String nom) {
-        return jeuneService.getAllJeunesByNom(nom);
     }
 }

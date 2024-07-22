@@ -9,35 +9,65 @@ import org.springframework.data.repository.query.Param;
 import ma.inpt.esj.entities.Jeune;
 
 public interface JeuneRepository extends JpaRepository<Jeune, Long> {
+    @Query(value = "SELECT\r\n" + //
+            "\tj.id,\r\n" + //
+            "\ti.nom,\r\n" + //
+            "\ti.prenom,\r\n" + //
+            "\tj.sexe,\r\n" + //
+            "\tj.age,\r\n" + //
+            "\tstring_agg(DISTINCT c.diagnostic, '#') AS diagnostic,\r\n" + //
+            "\tstring_agg(DISTINCT c.date_consultation, '#') AS date_consultation\r\n" + //
+            "FROM\r\n" + //
+            "\tjeune j\r\n" + //
+            "JOIN\r\n" + //
+            "\tinfo_user i ON j.info_user_id = i.id\r\n" + //
+            "LEFT JOIN\r\n" + //
+            "\tconsultation c ON c.jeune_id = j.id\r\n" + //
+            "GROUP BY\r\n" + //
+            "\tj.id, i.nom, i.prenom, j.sexe, j.age;", nativeQuery = true)
+    List<Object[]> getAllJeuneWithInfoUser();
 
-    @Query(value = "select * from jeune order by age", nativeQuery = true)
-    List<Jeune> getAllJeunesOrderByAgeAsc();
-
-    @Query(value = "select * from jeune order by age desc", nativeQuery = true)
-    List<Jeune> getAllJeunesOrderByAgeDesc();
-
-    @Query(value = "select j.* from jeune j, info_user i where j.info_user_id = i.id order by i.nom", nativeQuery = true)
-    List<Jeune> getAllJeunesOrderByNom();
-
-    @Query(value = "select j.* from jeune j, info_user i where j.info_user_id = i.id order by i.prenom", nativeQuery = true)
-    List<Jeune> getAllJeunesOrderByPrenom();
-
-    /*
-    @Query(value = "select c.* from jeune j, consultation c where j.id = c.jeune_id and j.id = :id order by c.date", nativeQuery = true)
-    List<Consultation> getAllConsultationByDateAsc(@Param("id") Long id);
-
-    @Query(value = "select c.* from jeune j, consultation c where j.id = c.jeune_id and j.id = :id order by c.date desc", nativeQuery = true)
-    List<Consultation> getAllConsultationByDateDesc(@Param("id") Long id);
-    */
-
-    @Query(value = "select * from jeune where sexe = :sexe", nativeQuery = true)
-    List<Jeune> getAllJeunesBySexe(@Param("sexe") String sexe);
-
-    @Query(value = "select j.* from jeune j, info_user i where j.info_user_id = i.id and i.nom = :nom", nativeQuery = true)
-    List<Jeune> getAllJeunesByNom(@Param("nom") String nom);
-
-    /*
-    @Query(value = "select j.* from jeune j, dossier_medical d where d.jeune_id = j.id and d.maladies_diagnostiquees = :maladie", nativeQuery = true)
-    List<Jeune> getAllJeunesByMaladie(@Param("maladie") String maladie);
-    */
+    @Query(value = "SELECT\r\n" + //
+            "\tj.id,\r\n" + //
+            "\ti.nom,\r\n" + //
+            "\ti.prenom,\r\n" + //
+            "\ti.mail,\r\n" + //
+            "\ti.tel,\r\n" + //
+            "\ti.cin,\r\n" + //
+            "\ti.image_url,\r\n" + //
+            "\tj.sexe,\r\n" + //
+            "\tj.adresse,\r\n" + //
+            "\tj.date_naissance,\r\n" + //
+            "\tj.identifiant_patient,\r\n" + //
+            "\tj.scolarise,\r\n" + //
+            "\tj.niveau_etudes,\r\n" + //
+            "\tj.cne,\r\n" + //
+            "\tj.favorite,\r\n" + //
+            "\tstring_agg(DISTINCT apm.medicaux, '#') AS medicaux,\r\n" + //
+            "\tstring_agg(DISTINCT apc.chirurgicaux, '#') AS chirurgicaux,\r\n" + //
+            "\tstring_agg(DISTINCT aph.habitues, '#') AS habitues,\r\n" + //
+            "\tstring_agg(DISTINCT afm.maladies_familiales, '#') AS maladies_familiales,\r\n" + //
+            "\tstring_agg(DISTINCT o.observation, '#') AS observation,\r\n" + //
+            "\tstring_agg(DISTINCT CONCAT(c.date_consultation, ';', c.motif_consultation, ';', c.diagnostic, ';', c.traitement, ';', c.recommandation), '#') AS consultation\r\n" + //
+            "FROM\r\n" + //
+            "\tjeune j\r\n" + //
+            "JOIN\r\n" + //
+            "\tinfo_user i ON j.info_user_id = i.id\r\n" + //
+            "LEFT JOIN\r\n" + //
+            "\tap_medicaux apm ON apm.jeune_id = j.id\r\n" + //
+            "LEFT JOIN\r\n" + //
+            "ap_chirurgicaux apc ON apc.jeune_id = j.id\r\n" + //
+            "LEFT JOIN\r\n" + //
+            "\tap_habitues aph ON aph.jeune_id = j.id\r\n" + //
+            "LEFT JOIN\r\n" + //
+            "af_maladies afm ON afm.jeune_id = j.id\r\n" + //
+            "LEFT JOIN\r\n" + //
+            "observation o ON o.jeune_id = j.id\r\n" + //
+            "LEFT JOIN\r\n" + //
+            "\tconsultation c ON c.jeune_id = j.id\r\n" + //
+            "WHERE\r\n" + //
+            "\tj.id = :id\r\n" + //
+            "GROUP BY\r\n" + //
+            "\tj.id, i.nom, i.prenom, i.mail, i.tel, i.cin, i.image_url, j.sexe, j.adresse, j.date_naissance, j.identifiant_patient, j.scolarise, j.niveau_etudes, j.cne, j.favorite;", nativeQuery = true)
+    Object getJeuneDossierMedical(@Param("id") Long id);
 }
