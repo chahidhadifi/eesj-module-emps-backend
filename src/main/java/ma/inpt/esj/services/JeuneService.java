@@ -26,6 +26,10 @@ public class JeuneService {
         return jeuneRepository.getJeuneDossierMedical(id);
     }
 
+    public List<Object[]> getFavoritePatients() {
+        return jeuneRepository.getFavoritePatients();
+    }
+
     public Optional<Jeune> getJeuneById(Long id) {
         return jeuneRepository.findById(id);
     }
@@ -43,6 +47,10 @@ public class JeuneService {
         jeune.setScolarise(jeuneDetails.isScolarise());
         jeune.setFavorite(jeuneDetails.isFavorite());
         return jeuneRepository.save(jeune);
+    }
+
+    public void updateFavoriteState(Long id, Boolean favorite) {
+        jeuneRepository.updateFavoriteState(id, favorite);
     }
 
     public void deleteJeune(Long id) {

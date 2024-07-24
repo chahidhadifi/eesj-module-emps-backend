@@ -3,6 +3,7 @@ package ma.inpt.esj.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +43,11 @@ public class JeuneController {
         return jeuneService.getJeuneById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/favorite-patients")
+    public List<Object[]> getFavoritePatients() {
+        return jeuneService.getFavoritePatients();
+    }
+
     @PostMapping
     public Jeune createJeune(@RequestBody Jeune jeune) {
         return jeuneService.createJeune(jeune);
@@ -50,6 +56,11 @@ public class JeuneController {
     @PutMapping("/{id}")
     public ResponseEntity<Jeune> updateJeune(@PathVariable Long id, @RequestBody Jeune jeuneDetails) {
         return ResponseEntity.ok(jeuneService.updateJeune(id, jeuneDetails));
+    }
+
+    @PutMapping("/favorite/{id}/{favorite}")
+    public void updateFavoriteState(@PathVariable Long id, @PathVariable Boolean favorite) {
+        jeuneService.updateFavoriteState(id, favorite);
     }
 
     @DeleteMapping("/{id}")
