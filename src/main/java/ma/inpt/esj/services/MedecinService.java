@@ -22,6 +22,10 @@ public class MedecinService {
         return medecinRepository.findById(id);
     }
 
+    public Object getMedecinEvaluation() {
+        return medecinRepository.getMedecinEvaluation();
+    }
+
     public Medecin createMedecin(Medecin medecin) {
         return medecinRepository.save(medecin);
     }

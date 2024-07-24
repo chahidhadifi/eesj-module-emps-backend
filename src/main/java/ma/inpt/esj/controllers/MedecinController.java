@@ -32,6 +32,11 @@ public class MedecinController {
         return medecinService.getMedecinById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/evaluation")
+    public Object getMedecinEvaluation() {
+        return medecinService.getMedecinEvaluation();
+    }
+
     @PostMapping
     public Medecin createMedecin(@RequestBody Medecin medecin) {
         return medecinService.createMedecin(medecin);
